@@ -6,29 +6,29 @@ return {
 		local set = vim.keymap.set
 
 		fzf.setup({
-			-- files = {
-			-- 	find_opts = "-type f \\! -path",
-			-- },
 		})
 
 		vim.cmd("FzfLua register_ui_select")
-		set("n", "<leader>sm", function()
-			fzf.manpages()
-		end)
-		set("n", "<leader>sb", function()
-			fzf.buffers()
-		end)
-		set("n", "<leader>sf", function()
-			fzf.files()
-		end)
-		set("n", "<leader>ch", function()
-			fzf.command_history()
-		end)
-		set("n", "<leader>sh", function()
-			fzf.helptags()
-		end)
-		set("n", "<leader>sn", function()
-			fzf.files({ cwd = "~/.config/nvim/" })
-		end)
+
+		local mappings = {
+			["<leader>sb"] = function() fzf.buffers() end,
+			["<leader>fg"] = function() fzf.git_files() end,
+			["<leader>sf"] = function() fzf.files() end,
+			["<leader>sn"] = function() fzf.files({ cwd = "~/.config/nvim/" }) end,
+
+			["<leader>ch"] = function() fzf.command_history() end,
+			["<leader>sh"] = function() fzf.helptags() end,
+			["<leader>sm"] = function() fzf.manpages() end,
+
+			["<leader>sg"] = function() fzf.grep_cword() end,
+			["<leader>gb"] = function() fzf.grep_curbuf() end,
+
+			["grd"] = function() fzf.lsp_declarations() end,
+
+		}
+
+		for key, fn in pairs(mappings) do
+			set("n", key, fn)
+		end
 	end,
 }

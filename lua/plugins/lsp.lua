@@ -12,7 +12,8 @@ return {
 		require("mason").setup()
 		require("fidget").setup({})
 		require("mason-lspconfig").setup({
-			ensure_installed = { "clangd", "lua_ls" },
+			ensure_installed = { "lua_ls" },
+			automatic_installation = false,
 		})
 
 		local allcapabilities = vim.lsp.protocol.make_client_capabilities()
@@ -22,22 +23,29 @@ return {
 		vim.lsp.config("clangd", {
 			capabilities = capabilities,
 			cmd = {
-				"clangd",
+				"clangd-20",
 				"--clang-tidy",
 				"--background-index",
 				"--header-insertion=iwyu",
 				"--all-scopes-completion",
-				"--completion-parse=auto",
 				"--completion-style=bundled",
 				"--suggest-missing-includes",
-				"--query-driver=/usr/bin/cc*",
+				"--query-driver=/usr/bin/cc,/usr/bin/clang,/usr/bin/gcc",
+				"--compile-commands-dir=" .. vim.fn.getcwd(),
 			},
 			filetypes = { "c", "h" },
 			init_options = {
 				usePlaceholders = true,
 				clangdFileStatus = true,
 				completeUnimported = true,
-				fallbackFlags = { "-Wall", "-Wextra", "-Werror" },
+				fallbackFlags = {
+					"-Wall",
+					"-Wextra",
+					"-Werror",
+					-- "-I/usr/include",
+					-- "-I/usr/include/x86_64-linux-gnu",
+					-- "-D_GNU_SOURCE",
+				},
 			},
 		})
 		vim.lsp.enable("clangd")

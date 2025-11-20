@@ -51,7 +51,8 @@ autocmd("LspAttach", {
 		if not client then
 			return
 		end
-		if vim.bo.filetype == "lua" then
+		local ft = vim.bo.filetype
+		if ft == "lua" then
 			autocmd("BufWritePre", {
 				buffer = args.buf,
 				callback = function()

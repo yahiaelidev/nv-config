@@ -12,11 +12,22 @@ return {
 	---@type blink.cmp.Config
 
 	config = function()
+		require("luasnip.loaders.from_vscode").lazy_load()
 		require("blink.cmp").setup({
-			keymap = { preset = "default" },
+			keymap     = { preset = "default" },
 			appearance = { nerd_font_variant = "mono" },
 
 			completion = {
+				trigger = {
+					prefetch_on_insert = true,
+				},
+
+				list = {
+					selection = {
+						auto_insert = true,
+					},
+				},
+
 				ghost_text = {
 					enabled = false,
 					show_with_selection = true,
@@ -24,22 +35,24 @@ return {
 					show_with_menu = true,
 					show_without_menu = true,
 				},
+
 				menu = {
 					border = nil,
 					scrolloff = 1,
 					min_width = 10,
-					max_height = 5,
+					max_height = 15,
 					auto_show = true,
 					scrollbar = false,
 					draw = {
+
 						columns = {
+							{ "kind_icon",  gap = 1 },
 							{
 								"label",
 								"label_description",
 								gap = 1,
 							},
 							{ "kind" },
-							{ "kind_icon",  gap = 1 },
 							{ "source_name" },
 						},
 					},
@@ -54,8 +67,8 @@ return {
 					auto_show_delay_ms = 500,
 				},
 			},
-			fuzzy = { implementation = "prefer_rust_with_warning" },
-			sources = {
+			fuzzy      = { implementation = "prefer_rust_with_warning" },
+			sources    = {
 				default = { "lsp", "buffer", "snippets", "path" },
 			},
 		})
