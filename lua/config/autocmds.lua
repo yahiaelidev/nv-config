@@ -1,5 +1,15 @@
 local autocmd = vim.api.nvim_create_autocmd
 
+local ucmd = vim.api.nvim_create_user_command
+local cmd = vim.api.nvim_command
+
+-- Hell YEaH
+ucmd("W", function() cmd("wa") end, { nargs = 0 })
+ucmd("Wa", function() cmd("wa") end, { nargs = 0 })
+ucmd("WA", function() cmd("wa") end, { nargs = 0 })
+ucmd("Wq", function() cmd("wq") end, { nargs = 0 })
+ucmd("WQ", function() cmd("wq") end, { nargs = 0 })
+
 function Autogroup(name, options)
 	options = options or {}
 	options.clear = options.clear ~= false

@@ -34,7 +34,7 @@ return {
 				"--compile-commands-dir=" .. vim.fn.getcwd(),
 			},
 
-			filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
+			filetypes = { "c", "h", "cpp", "objc", "objcpp", "cuda" },
 			init_options = {
 				usePlaceholders = true,
 				clangdFileStatus = true,
