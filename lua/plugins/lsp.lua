@@ -33,7 +33,8 @@ return {
 				"--query-driver=/usr/bin/cc,/usr/bin/clang,/usr/bin/gcc",
 				"--compile-commands-dir=" .. vim.fn.getcwd(),
 			},
-			filetypes = { "c", "h" },
+
+			filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
 			init_options = {
 				usePlaceholders = true,
 				clangdFileStatus = true,
