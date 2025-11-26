@@ -4,6 +4,15 @@ local map = vim.keymap.set
 map("n", "x", '"_x', opts)
 map("n", "<leader>m", "'")
 map("n", "=ap", "ma=ap'a")
+map({ "n", "v" }, "<leader>c", '"_c')
+map({ "n", "v" }, "<leader>d", '"_d')
+
+-- happy dev, happy wife
+map("i", "__", "->")
+map("i", "bb", "[]<ESC>i")
+map("i", "jj", '""<ESC>i', { noremap = true })
+map("i", "kk", "''<ESC>i", { noremap = true })
+map("i", "jf", "<ESC>", { noremap = false })
 
 map("v", "J", ":m '>+1<CR>gv")
 map("v", "K", ":m '<-2<CR>gv")
@@ -53,11 +62,6 @@ end)
 map("n", "<leader>tl", function()
 	vim.cmd(":colo catppuccin-latte")
 end)
-
-map({ "n", "v" }, "<leader>d", '"_d')
-map("i", "jk", '"', { noremap = true })
-map("i", "jl", "'", { noremap = true })
-map("i", "jj", "<ESC>", { noremap = false })
 
 map("n", "<up>", '<cmd>echo "in your dreams"<CR>')
 map("n", "<left>", '<cmd>echo "in your dreams"<CR>')

@@ -12,7 +12,7 @@ return {
 		require("mason").setup()
 		require("fidget").setup({})
 		require("mason-lspconfig").setup({
-			ensure_installed = { "lua_ls" },
+			ensure_installed = { "lua_ls", "bashls" },
 			automatic_installation = false,
 		})
 
@@ -20,68 +20,76 @@ return {
 		local capabilities = require("blink.cmp").get_lsp_capabilities(allcapabilities)
 		capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-		vim.lsp.config("clangd", {
-			capabilities = capabilities,
-			cmd = {
-				"clangd-20",
-				"--clang-tidy",
-				"--background-index",
-				"--header-insertion=iwyu",
-				"--all-scopes-completion",
-				"--completion-style=bundled",
-				"--suggest-missing-includes",
-				"--query-driver=/usr/bin/cc,/usr/bin/clang,/usr/bin/gcc",
-				"--compile-commands-dir=" .. vim.fn.getcwd(),
-			},
-
-			filetypes = { "c", "h", "cpp", "objc", "objcpp", "cuda" },
-			init_options = {
-				usePlaceholders = true,
-				clangdFileStatus = true,
-				completeUnimported = true,
-				fallbackFlags = {
-					"-Wall",
-					"-Wextra",
-					"-Werror",
-					-- "-I/usr/include",
-					-- "-I/usr/include/x86_64-linux-gnu",
-					-- "-D_GNU_SOURCE",
+		local servers = {
+			clangd = {
+				cmd = {
+					"clangd-20",
+					"--clang-tidy",
+					"--background-index",
+					"--header-insertion=iwyu",
+					"--all-scopes-completion",
+					"--completion-style=bundled",
+					"--suggest-missing-includes",
+					"--query-driver=/usr/bin/clang",
+					"--compile-commands-dir=" .. vim.fn.getcwd(),
 				},
-			},
-		})
-		vim.lsp.enable("clangd")
-
-		vim.lsp.config("lua_ls", {
-			capabilities = capabilities,
-			settings = {
-				Lua = {
-					format = { enable = true },
-					runtime = { version = "LuaJIT" },
-					diagnostics = { globals = { "vim" } },
-					workspace = {
-						library = {
-							[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-							[vim.fn.stdpath("config") .. "/lua"] = true,
-						},
-						checkThirdParty = false,
+				filetypes = { "c", "h", "hpp", "cpp", "objc", "objcpp", "cuda" },
+				init_options = {
+					usePlaceholders = true,
+					clangdFileStatus = true,
+					completeUnimported = true,
+					fallbackFlags = {
+						"-Wall",
+						"-Wextra",
+						"-Werror",
+						"-I/usr/include",
+						"-I/usr/include/x86_64-linux-gnu",
+						"-D_GNU_SOURCE",
 					},
-					telemetry = { enable = false },
 				},
 			},
-		})
+
+			lua_ls = {
+				settings = {
+					Lua = {
+						format = { enable = true },
+						runtime = { version = "LuaJIT" },
+						diagnostics = { globals = { "vim" } },
+						workspace = {
+							library = {
+								[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+								[vim.fn.stdpath("config") .. "/lua"] = true,
+							},
+							checkThirdParty = false,
+						},
+						telemetry = { enable = false },
+					},
+				},
+			},
+
+			bashls = {
+				filetypes = { "sh", "bash", "zsh", "shell" },
+			},
+
+		}
+
+		for srv, conf in pairs(servers) do
+			vim.lsp.config(srv, vim.tbl_extend("force", {
+				capabilities = capabilities,
+			}, conf))
+			vim.lsp.enable(srv)
+		end
 
 		vim.diagnostic.config({
 			virtual_text = true,
-			underline = false,
+			underline = true,
 			severity_sort = true,
 			update_in_insert = false,
 			float = {
 				focusable = false,
 				style = "minimal",
 				border = "none",
-				source = "if_many",
-				header = "",
-				prefix = "",
+				source = false,
 			},
 			signs = {
 				text = {
@@ -90,7 +98,15 @@ return {
 					[vim.diagnostic.severity.HINT] = "⚑",
 					[vim.diagnostic.severity.INFO] = "»",
 				},
+				numhl = {
+					[vim.diagnostic.severity.ERROR] = "ErrorMsg",
+					[vim.diagnostic.severity.WARN] = "WarningMsg",
+				}
 			},
 		})
+
+		-- vim.keymap.set('n', '<leader>a', vim.diagnostic.open_float, {
+		-- 	desc = 'Show diagnostic details'
+		-- })
 	end,
 }

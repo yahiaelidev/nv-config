@@ -2,6 +2,7 @@ return {
 	{
 		"catppuccin/nvim",
 		name = "catppuccin",
+		enabled = true,
 		priority = 1000,
 		config = function()
 			local lang_hl = require("custom.colors")
@@ -26,18 +27,20 @@ return {
 				end,
 			})
 			vim.cmd.colorscheme("catppuccin-mocha")
-			vim.cmd(":hi statusline guibg=NONE")
+			-- vim.cmd(":hi statusline guibg=NONE")
 		end,
 	},
 	{
 		'rose-pine/neovim',
-		enabled = true,
+		enabled = false,
 		name = 'rose-pine',
 		config = function()
 			require('rose-pine').setup {
 
 				variant = 'main',
-				dim_inactive_windows = true,
+				extend_background_behind_borders = true,
+				disable_background = true,
+				dim_inactive_windows = false,
 				palette = {
 					main = {
 						rose = "#ea9a97",
@@ -45,9 +48,16 @@ return {
 						pine = "#3e8fb0"
 					},
 				},
+
+				styles = {
+					bold = true,
+					italic = false,
+					transparency = true,
+				},
 				highlight_groups = {
 					Comment = { fg = 'comment' },
 					VertSplit = { fg = "muted", bg = "muted" },
+
 				},
 			}
 			-- vim.cmd 'colorscheme rose-pine'

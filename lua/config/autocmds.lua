@@ -1,14 +1,15 @@
-local autocmd = vim.api.nvim_create_autocmd
-
-local ucmd = vim.api.nvim_create_user_command
 local cmd = vim.api.nvim_command
+local autocmd = vim.api.nvim_create_autocmd
+local ucmd = vim.api.nvim_create_user_command
 
 -- Hell YEaH
-ucmd("W", function() cmd("wa") end, { nargs = 0 })
-ucmd("Wa", function() cmd("wa") end, { nargs = 0 })
-ucmd("WA", function() cmd("wa") end, { nargs = 0 })
-ucmd("Wq", function() cmd("wq") end, { nargs = 0 })
-ucmd("WQ", function() cmd("wq") end, { nargs = 0 })
+ucmd("Q", "q", { nargs = 0 })
+ucmd("W", "wa", { nargs = 0 })
+ucmd("Wa", "wa", { nargs = 0 })
+ucmd("WA", "wa", { nargs = 0 })
+ucmd("Wq", "wq", { nargs = 0 })
+ucmd("WQ", "wq", { nargs = 0 })
+ucmd("Cdd", "lcd %:p:h", { nargs = 0 })
 
 function Autogroup(name, options)
 	options = options or {}
@@ -36,12 +37,14 @@ autocmd("FileType", {
 	pattern = { "c" },
 	group = customIndent,
 	callback = function()
+		local map = vim.keymap.set
+		map("i", "--", "->")
+		vim.opt_local.cindent = true
+		vim.opt_local.smartindent = true
 		-- vim.opt.tabstop = 4
 		-- vim.bo.cindent = true
 		-- vim.opt.shiftwidth = 4
 		-- vim.opt.softtabstop = 4
-		vim.opt_local.cindent = true
-		vim.opt_local.smartindent = true
 	end,
 })
 

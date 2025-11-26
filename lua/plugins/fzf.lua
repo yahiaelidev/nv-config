@@ -24,6 +24,7 @@ return {
 			["<leader>gb"] = function() fzf.grep_curbuf() end,
 
 			["grd"] = function() fzf.lsp_declarations() end,
+			["grr"] = function() fzf.lsp_references() end,
 
 		}
 
