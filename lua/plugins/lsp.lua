@@ -12,7 +12,12 @@ return {
 		require("mason").setup()
 		require("fidget").setup({})
 		require("mason-lspconfig").setup({
-			ensure_installed = { "lua_ls", "bashls" },
+			ensure_installed = {
+				"lua_ls",
+				"bashls",
+				"ruff",
+				"basedpyright",
+			},
 			automatic_installation = false,
 		})
 
@@ -63,9 +68,24 @@ return {
 							checkThirdParty = false,
 						},
 						telemetry = { enable = false },
-					},
+					}
+				}
+			},
+
+			basedpyright = {
+				analysis = {
+					diagnosticMode = "openFilesOnly",
+					inlayHints = {
+						callArgumentNames = true
+					}
 				},
 			},
+
+			-- ruff = {
+			-- 	on_attach = function(client, _)
+			-- 		client.server_capabilities.diagnosticProvider = false
+			-- 	end,
+			-- },
 
 			bashls = {
 				filetypes = { "sh", "bash", "zsh", "shell" },

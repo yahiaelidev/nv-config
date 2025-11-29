@@ -8,8 +8,8 @@ map({ "n", "v" }, "<leader>c", '"_c')
 map({ "n", "v" }, "<leader>d", '"_d')
 
 -- happy dev, happy wife
-map("i", "__", "->")
 map("i", "bb", "[]<ESC>i")
+map("i", "BB", "{}<ESC>i")
 map("i", "jj", '""<ESC>i', { noremap = true })
 map("i", "kk", "''<ESC>i", { noremap = true })
 map("i", "jf", "<ESC>", { noremap = false })

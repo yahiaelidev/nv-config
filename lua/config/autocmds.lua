@@ -1,4 +1,3 @@
-local cmd = vim.api.nvim_command
 local autocmd = vim.api.nvim_create_autocmd
 local ucmd = vim.api.nvim_create_user_command
 
@@ -17,8 +16,6 @@ function Autogroup(name, options)
 	return vim.api.nvim_create_augroup(name, options)
 end
 
-local customIndent = Autogroup("Custom-indent")
-
 autocmd("TextYankPost", {
 	group = Autogroup("hightlight-yank"),
 	callback = function()
@@ -33,51 +30,8 @@ autocmd("BufWritePost", {
 	desc = "Automatically reload lua config files on save",
 })
 
-autocmd("FileType", {
-	pattern = { "c" },
-	group = customIndent,
-	callback = function()
-		local map = vim.keymap.set
-		map("i", "--", "->")
-		vim.opt_local.cindent = true
-		vim.opt_local.smartindent = true
-		-- vim.opt.tabstop = 4
-		-- vim.bo.cindent = true
-		-- vim.opt.shiftwidth = 4
-		-- vim.opt.softtabstop = 4
-	end,
-})
-
-autocmd("FileType", {
-	pattern = { "lua" },
-	group = customIndent,
-	callback = function()
-		vim.opt.tabstop = 2
-		vim.opt.shiftwidth = 2
-		vim.opt.softtabstop = 2
-	end,
-})
-
-autocmd("LspAttach", {
-	callback = function(args)
-		local client = vim.lsp.get_client_by_id(args.data.client_id)
-		if not client then
-			return
-		end
-		local ft = vim.bo.filetype
-		if ft == "lua" then
-			autocmd("BufWritePre", {
-				buffer = args.buf,
-				callback = function()
-					vim.lsp.buf.format({ bufnr = args.buf, id = client.id })
-				end,
-			})
-		end
-	end,
-})
-
 autocmd("TermOpen", {
-	group = Autogroup("open-Terminal"),
+	group = Autogroup("Terminal"),
 	callback = function()
 		vim.opt.number = false
 		vim.opt.relativenumber = false
