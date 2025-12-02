@@ -15,8 +15,7 @@ return {
 			ensure_installed = {
 				"lua_ls",
 				"bashls",
-				"ruff",
-				"basedpyright",
+				"gopls",
 			},
 			automatic_installation = false,
 		})
@@ -26,6 +25,22 @@ return {
 		capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 		local servers = {
+
+			gopls = {
+				cmd = { "gopls" },
+				filetypes = { "go", "gomod", "gowork", "gotmpl", "gosum" },
+				root_markers = { "go.mod", "go.work", ".git" },
+				settings = {
+					gopls = {
+						completeUnimported = true,
+						usePlaceholders = true,
+						analyses = {
+							unusedparams = true,
+						},
+					},
+				},
+			},
+
 			clangd = {
 				cmd = {
 					"clangd-20",
@@ -68,41 +83,28 @@ return {
 							checkThirdParty = false,
 						},
 						telemetry = { enable = false },
-					}
-				}
-			},
-
-			basedpyright = {
-				analysis = {
-					diagnosticMode = "openFilesOnly",
-					inlayHints = {
-						callArgumentNames = true
-					}
+					},
 				},
 			},
-
-			-- ruff = {
-			-- 	on_attach = function(client, _)
-			-- 		client.server_capabilities.diagnosticProvider = false
-			-- 	end,
-			-- },
 
 			bashls = {
 				filetypes = { "sh", "bash", "zsh", "shell" },
 			},
-
 		}
 
 		for srv, conf in pairs(servers) do
-			vim.lsp.config(srv, vim.tbl_extend("force", {
-				capabilities = capabilities,
-			}, conf))
+			vim.lsp.config(
+				srv,
+				vim.tbl_extend("force", {
+					capabilities = capabilities,
+				}, conf)
+			)
 			vim.lsp.enable(srv)
 		end
 
 		vim.diagnostic.config({
 			virtual_text = true,
-			underline = true,
+			underline = false,
 			severity_sort = true,
 			update_in_insert = false,
 			float = {
@@ -121,12 +123,12 @@ return {
 				numhl = {
 					[vim.diagnostic.severity.ERROR] = "ErrorMsg",
 					[vim.diagnostic.severity.WARN] = "WarningMsg",
-				}
+				},
 			},
 		})
 
-		-- vim.keymap.set('n', '<leader>a', vim.diagnostic.open_float, {
-		-- 	desc = 'Show diagnostic details'
-		-- })
+		vim.keymap.set("n", "<leader>a", vim.diagnostic.open_float, {
+			desc = "Show diagnostic details",
+		})
 	end,
 }

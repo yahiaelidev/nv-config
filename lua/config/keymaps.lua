@@ -41,10 +41,10 @@ map("n", "<leader>iq", "ci'") -- i inside
 map("n", "<leader>id", 'ci"')
 map("n", "<leader>ib", "ci[")
 map("n", "<leader>ic", "ci{")
-map("n", "<leader>aq", "ca'") -- c around
-map("n", "<leader>ad", 'ca"')
-map("n", "<leader>ab", "ca[")
-map("n", "<leader>ac", "ca{")
+-- map("n", "<leader>aq", "ca'") -- c around
+-- map("n", "<leader>ad", 'ca"')
+-- map("n", "<leader>ab", "ca[")
+-- map("n", "<leader>ac", "ca{")
 map("n", "<leader>yq", "yi'") -- yank inside
 map("n", "<leader>yd", 'yi"')
 map("n", "<leader>yb", "yi[")
