@@ -2,21 +2,21 @@ return {
 	"stevearc/conform.nvim",
 	opts = {},
 	config = function()
-		require("conform").setup({
-			formatters_by_ft = {
-				lua = { "stylua" },
-				python = {
-					"ruff_fix",
-					"ruff_format",
-					"ruff_organize_imports",
-					-- "isort",
-					-- "black",
-				},
-			},
-			format_on_save = {
-				timeout_ms = 500,
-				lsp_format = "fallback",
-			},
+		local conform = require("conform")
+
+		conform.setup({
+			format_on_save = function(bufnr)
+				local disable_filetypes = {
+					c = true,
+					h = true,
+				}
+
+				if disable_filetypes[vim.bo[bufnr].filetype] then
+					return
+				end
+
+				conform.format({ bufnr = bufnr, lsp_fallback = true })
+			end,
 		})
 	end,
 }

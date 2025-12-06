@@ -26,44 +26,32 @@ return {
 
 		vim.cmd("FzfLua register_ui_select")
 
+		-- stylua: ignore start
 		local mappings = {
-			["<leader>sb"] = function()
-				fzf.buffers()
-			end,
-			["<leader>fg"] = function()
-				fzf.git_files()
-			end,
-			["<leader>sf"] = function()
-				fzf.files()
-			end,
-			["<leader>sn"] = function()
-				fzf.files({ cwd = "~/.config/nvim/" })
-			end,
+			["<leader>sb"] = function() fzf.buffers() end,
+			["<leader>fg"] = function() fzf.git_files() end,
+			["<leader>sf"] = function() fzf.files() end,
+			["<leader>sn"] = function() fzf.files({ cwd = "~/.config/nvim/" }) end,
 
-			["<leader>ch"] = function()
-				fzf.command_history()
-			end,
-			["<leader>sh"] = function()
-				fzf.helptags()
-			end,
-			["<leader>sm"] = function()
-				fzf.manpages()
-			end,
+			["<leader>ch"] = function() fzf.command_history() end,
+			["<leader>sh"] = function() fzf.helptags() end,
+			["<leader>sm"] = function() fzf.manpages() end,
 
-			["<leader>sg"] = function()
-				fzf.grep_cword()
-			end,
-			["<leader>gb"] = function()
-				fzf.grep_curbuf()
-			end,
+			["<leader>sg"] = function() fzf.grep_cword() end,
+			["<leader>gb"] = function() fzf.grep_curbuf() end,
+
+			["grr"] = function() return fzf.lsp_references() end,
+			["gri"] = function() fzf.lsp_implementations() end,
 
 			["grd"] = function()
-				fzf.lsp_declarations()
-			end,
-			["grr"] = function()
-				fzf.lsp_references()
+				if vim.bo.filetype == "go" then
+					fzf.lsp_definitons()
+				else
+					fzf.lsp_definitons()
+				end
 			end,
 		}
+		-- stylua: ignore end
 
 		for key, fn in pairs(mappings) do
 			set("n", key, fn)
