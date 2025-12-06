@@ -47,7 +47,7 @@ return {
 				if vim.bo.filetype == "go" then
 					fzf.lsp_definitons()
 				else
-					fzf.lsp_definitons()
+					fzf.lsp_definitions()
 				end
 			end,
 		}
