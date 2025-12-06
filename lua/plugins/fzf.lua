@@ -45,9 +45,9 @@ return {
 
 			["grd"] = function()
 				if vim.bo.filetype == "go" then
-					fzf.lsp_definitons()
-				else
 					fzf.lsp_definitions()
+				else
+					fzf.lsp_declarations()
 				end
 			end,
 		}
