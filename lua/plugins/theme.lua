@@ -2,7 +2,7 @@ return {
 	{
 		"catppuccin/nvim",
 		name = "catppuccin",
-		enabled = false,
+		enabled = true,
 		priority = 1000,
 		config = function()
 			local lang_hl = require("custom.colors")
@@ -26,13 +26,13 @@ return {
 					return hl
 				end,
 			})
-			-- vim.cmd.colorscheme("catppuccin-mocha")
+			vim.cmd.colorscheme("catppuccin-mocha")
 			-- vim.cmd(":hi statusline guibg=NONE")
 		end,
 	},
 	{
 		"rose-pine/neovim",
-		enabled = true,
+		enabled = false,
 		name = "rose-pine",
 		config = function()
 			require("rose-pine").setup({
