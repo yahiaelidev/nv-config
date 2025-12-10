@@ -1,6 +1,7 @@
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
+vim.opt.expandtab = false
 
 vim.keymap.set("i", "ii", ":= ", { buffer = 0 })
 vim.keymap.set("i", "nah", ", _ := ", { buffer = 0 })

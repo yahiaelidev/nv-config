@@ -14,7 +14,9 @@ return {
 	config = function()
 		require("luasnip.loaders.from_vscode").lazy_load()
 		require("blink.cmp").setup({
-			keymap     = { preset = "default" },
+
+			snippets = { preset = "luasnip" },
+			keymap = { preset = "default" },
 			appearance = { nerd_font_variant = "mono" },
 
 			completion = {
@@ -46,7 +48,7 @@ return {
 					draw = {
 
 						columns = {
-							{ "kind_icon",  gap = 1 },
+							{ "kind_icon", gap = 1 },
 							{
 								"label",
 								"label_description",
@@ -57,6 +59,7 @@ return {
 						},
 					},
 				},
+
 				documentation = {
 					window = {
 						border = nil,
@@ -67,8 +70,8 @@ return {
 					auto_show_delay_ms = 500,
 				},
 			},
-			fuzzy      = { implementation = "prefer_rust_with_warning" },
-			sources    = {
+			fuzzy = { implementation = "prefer_rust_with_warning" },
+			sources = {
 				default = { "lsp", "buffer", "snippets", "path" },
 			},
 		})
