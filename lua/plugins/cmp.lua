@@ -25,7 +25,11 @@ return {
 
 			cmdline = {
 				keymap = {
-					preset = "default",
+					["<Up>"] = { "select_prev", "fallback" },
+					["<Down>"] = { "select_next", "fallback" },
+
+					["<C-p>"] = { "select_prev", "fallback" },
+					["<C-n>"] = { "select_next", "fallback" },
 				},
 			},
 

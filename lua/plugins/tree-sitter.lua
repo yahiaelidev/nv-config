@@ -1,11 +1,15 @@
 return {
-	'nvim-treesitter/nvim-treesitter',
+	"nvim-treesitter/nvim-treesitter",
 
-	build = ':TSUpdate',
-	main = 'nvim-treesitter.configs',
+	build = ":TSUpdate",
+	event = { "BufReadPre", "BufNewFile" },
+	main = "nvim-treesitter.configs",
 
+	-- stylua: ignore start
 	opts = {
-		ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+		ensure_installed = { "bash", "c", "diff", "html",
+			"lua", "luadoc", "markdown", "markdown_inline",
+			"query", "vim", "vimdoc", },
 
 		sync_install = false,
 		auto_install = true,
@@ -18,13 +22,14 @@ return {
 		incremental_selection = {
 			enable = true,
 			keymaps = {
-				init_selection = '<Enter>',
-				node_incremental = '<Enter>',
-				scope_incremental = 'grc',
-				node_decremental = '<Backspace>',
+				init_selection = "<Enter>",
+				node_incremental = "<Enter>",
+				scope_incremental = "grc",
+				node_decremental = "<Backspace>",
 			},
 		},
 
 		indent = { enable = true },
 	},
+	-- stylua: ignore end
 }

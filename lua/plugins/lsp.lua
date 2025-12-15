@@ -1,4 +1,5 @@
 ---@diagnostic disable: undefined-global
+-- TODO : Fix Active LSP Client on closed buffers
 return {
 	"neovim/nvim-lspconfig",
 	dependencies = {

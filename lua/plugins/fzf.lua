@@ -5,24 +5,46 @@ return {
 		local fzf = require("fzf-lua")
 		local set = vim.keymap.set
 
-		-- TODO : make things faster
-		-- [[
-		--exclude .git \
-		--exclude node_modules \
-		--exclude __pycache__ \
-		--exclude .cache \
-		--exclude target \
-		--exclude dist \
-		--exclude build \
-		--exclude vendor \
-		--exclude .npm \
-		--exclude .venv \
-		--exclude .cargo \
-		--exclude .fzf \
-		--exclude .bun \
-		--exclude .yarn'
-		-- ]]
-		fzf.setup({})
+		fzf.setup({
+			files = {
+				fd_opts = [[
+					--color=never --hidden --type f --type l --exclude .git
+					exclude .git
+					exclude node_modules
+					exclude __pycache__
+					exclude .cache
+					exclude target
+					exclude dist
+					exclude build
+					exclude vendor
+					exclude .npm
+					exclude .venv
+					exclude .cargo
+					exclude .fzf
+					exclude .bun
+					exclude .yarn
+					]],
+			},
+
+			keymap = {
+				["<A-j>"] = "preview-page-down",
+				["<A-k>"] = "preview-page-up",
+			},
+
+			winopts = {
+				fullscreen = true,
+				height = 1,
+				width = 1,
+				border = "rounded",
+
+				preview = {
+					layout = "horizontal",
+					horizontal = "bottom:50%",
+					border = "border",
+					wrap = "nowrap",
+				},
+			},
+		})
 
 		vim.cmd("FzfLua register_ui_select")
 
