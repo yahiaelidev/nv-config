@@ -4,8 +4,8 @@ local map = vim.keymap.set
 map("n", "x", '"_x', opts)
 map("n", "<leader>m", "'")
 map("n", "=ap", "ma=ap'a")
-map({ "n", "v" }, "<leader>c", '"_c')
-map({ "n", "v" }, "<leader>d", '"_d')
+map({ "n", "v" }, "<leader>c", '"_c', { desc = "Delete & Insert + No save to register" })
+map({ "n", "v" }, "<leader>d", '"_d', { desc = "Delete + No save to register" })
 
 -- happy dev, happy wife
 map("i", "bb", "[]<ESC>i")
@@ -13,6 +13,9 @@ map("i", "BB", "{}<ESC>i")
 map("i", "jj", '""<ESC>i', { noremap = true })
 map("i", "kk", "''<ESC>i", { noremap = true })
 map("i", "jf", "<ESC>", { noremap = false })
+
+map("n", "<A-j>", "<cmd>cnext<CR>zz", { desc = "<Down> QuickFix" })
+map("n", "<A-k>", "<cmd>cprev<CR>zz", { desc = "<Up> Quickfix" })
 
 map("v", "J", ":m '>+1<CR>gv")
 map("v", "K", ":m '<-2<CR>gv")
@@ -22,8 +25,8 @@ map("n", "<C-k>", "<C-w><C-k>")
 map("n", "<C-l>", "<C-w><C-l>")
 map("n", "<C-j>", "<C-w><C-j>")
 
-map("n", "<CS-l>", "<C-w>6<")
-map("n", "<CS-h>", "<C-w>6>")
+map("n", "<CS-l>", "<C-w>6<", { desc = "Shorten window" })
+map("n", "<CS-h>", "<C-w>6>", { desc = "Lengthen window" })
 
 map("n", "gl", "$")
 map("n", "<leader>e", "%")
@@ -50,18 +53,23 @@ map("n", "<leader>yd", 'yi"')
 map("n", "<leader>yb", "yi[")
 map("n", "<leader>yc", "yi{")
 
-map("n", "<leader>q", ":quit <CR>")
+map("n", "<leader>q", function()
+	local bufnr = vim.api.nvim_get_current_buf()
+	vim.cmd("quit")
+	pcall(vim.api.nvim_buf_delete, bufnr, { force = false })
+end, { desc = "Quit & delete the buffer" })
+
 map("n", "<leader>w", function()
 	vim.cmd.write()
-end)
+end, { desc = ":w command" })
 
-map("n", "<leader>tf", ":FzfLua colorschemes<CR>")
 map("n", "<leader>td", function()
 	vim.cmd("colo catppuccin-mocha")
-end)
+end, { desc = "Dark Mode catppuccin-mocha" })
+
 map("n", "<leader>tl", function()
 	vim.cmd(":colo catppuccin-latte")
-end)
+end, { desc = "Light Mode catppuccin-mocha" })
 
 map("n", "<up>", '<cmd>echo "in your dreams"<CR>')
 map("n", "<left>", '<cmd>echo "in your dreams"<CR>')

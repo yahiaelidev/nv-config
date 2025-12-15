@@ -16,8 +16,18 @@ return {
 		require("blink.cmp").setup({
 
 			snippets = { preset = "luasnip" },
-			keymap = { preset = "default" },
 			appearance = { nerd_font_variant = "mono" },
+
+			keymap = {
+				preset = "default",
+				["<Tab>"] = { "select_and_accept", "snippet_forward", "fallback" },
+			},
+
+			cmdline = {
+				keymap = {
+					preset = "default",
+				},
+			},
 
 			completion = {
 				trigger = {

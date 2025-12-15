@@ -7,7 +7,7 @@ return {
 		conform.setup({
 			format_on_save = function(bufnr)
 				local disable_filetypes = {
-					c = false,
+					c = true,
 					h = true,
 				}
 
