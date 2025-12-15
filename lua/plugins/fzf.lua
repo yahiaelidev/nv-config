@@ -5,26 +5,45 @@ return {
 		local fzf = require("fzf-lua")
 		local set = vim.keymap.set
 
+		-- stylua: ignore start
 		fzf.setup({
 			files = {
-				fd_opts = [[
-					--color=never --hidden --type f --type l --exclude .git
-					exclude .git
-					exclude node_modules
-					exclude __pycache__
-					exclude .cache
-					exclude target
-					exclude dist
-					exclude build
-					exclude vendor
-					exclude .npm
-					exclude .venv
-					exclude .cargo
-					exclude .fzf
-					exclude .bun
-					exclude .yarn
-					]],
+				cmd = table.concat({
+					"fd",
+					"--color=never",
+					"--hidden",
+					"--follow",
+					"--type", "f",
+					"--type", "l",
+
+					"--exclude", ".git",
+					"--exclude", "node_modules",
+					"--exclude", "__pycache__",
+					"--exclude", ".cache",
+					"--exclude", "target",
+					"--exclude", "dist",
+					"--exclude", "build",
+					"--exclude", "vendor",
+					"--exclude", ".npm",
+					"--exclude", ".venv",
+					"--exclude", ".cargo",
+					"--exclude", ".fzf",
+					"--exclude", ".bun",
+					"--exclude", ".yarn",
+					"--exclude", ".rustup",
+					"--exclude", ".local/",
+					"--exclude", "go/",
+
+					"--exclude", ".steam",
+					"--exclude", ".ssh",
+					"--exclude", "Videos/",
+					"--exclude", "Downloads/",
+					"--exclude", "Pictures/",
+					"--exclude", "Documents/",
+					"--exclude", "Desktop/",
+				}, " "),
 			},
+			-- stylua: ignore end
 
 			keymap = {
 				["<A-j>"] = "preview-page-down",
