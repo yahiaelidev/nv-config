@@ -54,7 +54,15 @@ return {
 					"--query-driver=/usr/bin/clang",
 					"--compile-commands-dir=" .. vim.fn.getcwd(),
 				},
-				filetypes = { "c", "h", "hpp", "cpp", "objc", "objcpp", "cuda" },
+				filetypes = {
+					"c",
+					"h",
+					-- "hpp",
+					-- "cpp",
+					-- "objc",
+					-- "objcpp",
+					-- "cuda",
+				},
 				init_options = {
 					usePlaceholders = true,
 					clangdFileStatus = true,

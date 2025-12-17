@@ -7,8 +7,12 @@ return {
 		conform.setup({
 			format_on_save = function(bufnr)
 				local disable_filetypes = {
-					c = true,
-					h = true,
+					c = false,
+					h = false,
+					-- hpp = true,
+					-- cpp = true,
+					-- cuda = true,
+					-- objc = true,
 				}
 
 				if disable_filetypes[vim.bo[bufnr].filetype] then

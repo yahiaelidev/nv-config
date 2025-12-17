@@ -71,6 +71,27 @@ map("n", "<leader>tl", function()
 	vim.cmd(":colo catppuccin-latte")
 end, { desc = "Light Mode catppuccin-mocha" })
 
+local function insert_blank_line(above)
+	local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+	local setLine = vim.api.nvim_buf_set_lines
+	local setCursor = vim.api.nvim_win_set_cursor
+
+	if above then
+		setLine(0, row - 1, row - 1, false, { "" })
+		setCursor(0, { row + 1, col })
+	else
+		setLine(0, row, row, false, { "" })
+		setCursor(0, { row, col })
+	end
+end
+
+vim.keymap.set("n", "<leader>9", function()
+	insert_blank_line(true)
+end, { desc = "Add empty line above" })
+vim.keymap.set("n", "<leader>0", function()
+	insert_blank_line(false)
+end, { desc = "Add empty line below" })
+
 map("n", "<up>", '<cmd>echo "in your dreams"<CR>')
 map("n", "<left>", '<cmd>echo "in your dreams"<CR>')
 map("n", "<down>", '<cmd>echo "in your dreams"<CR>')
