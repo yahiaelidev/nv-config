@@ -1,10 +1,20 @@
 return {
 	"stevearc/conform.nvim",
-	opts = {},
 	config = function()
 		local conform = require("conform")
-
 		conform.setup({
+			formatters_by_ft = {
+				c = { "c_formatter_42" },
+				h = { "c_formatter_42" },
+			},
+
+			formatters = {
+				c_formatter_42 = {
+					command = "c_formatter_42",
+					stdin = true,
+				},
+			},
+
 			format_on_save = function(bufnr)
 				local disable_filetypes = {
 					c = false,
@@ -19,7 +29,10 @@ return {
 					return
 				end
 
-				conform.format({ bufnr = bufnr, lsp_fallback = true })
+				return {
+					timeout_ms = 500,
+					lsp_fallback = true,
+				}
 			end,
 		})
 	end,

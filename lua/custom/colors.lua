@@ -11,6 +11,9 @@ M.highlights = function(colors)
 		["@function.builtin.c"] = { fg = colors.peach },
 		["@variable.parameter.c"] = { fg = colors.red },
 
+		["@lsp.typemod.function.defaultLibrary.c"] = { fg = colors.blue },
+		["@lsp.type.property.c"] = { fg = colors.teal },
+
 		["@keyword.import.c"] = { fg = colors.mauve },
 		["@constant.macro.c"] = { fg = colors.red, style = { "bold" } },
 

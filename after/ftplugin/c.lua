@@ -9,12 +9,13 @@ vim.keymap.set("i", "__", "->", { buffer = 0 })
 
 -- TODO: Coloring the output with nvim API
 local cmaps = {
-	gc = "run",
+	gc = "fclean",
 	gv = "v",
+	gr = "run",
 }
 
 for k, v in pairs(cmaps) do
-	vim.keymap.set("n", "<leader>" .. k, "<cmd>belowright split | resize 15 | terminal make " .. v .. "<CR>", {
+	vim.keymap.set("n", "<leader>" .. k, "<cmd>belowright split | resize 10 | terminal make " .. v .. "<CR>", {
 		desc = "Make " .. v,
 		buffer = 0,
 	})
