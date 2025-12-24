@@ -15,7 +15,7 @@ return {
 		require("mason-lspconfig").setup({
 			ensure_installed = {
 				"lua_ls",
-				"bashls",
+				-- "bashls",
 				"gopls",
 			},
 			automatic_installation = false,
@@ -85,10 +85,6 @@ return {
 						runtime = { version = "LuaJIT" },
 						diagnostics = { globals = { "vim" } },
 						workspace = {
-							library = {
-								[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-								[vim.fn.stdpath("config") .. "/lua"] = true,
-							},
 							checkThirdParty = false,
 						},
 						telemetry = { enable = false },

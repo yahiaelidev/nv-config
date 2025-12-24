@@ -9,7 +9,7 @@ return {
 		fzf.setup({
 			files = {
 				cmd = table.concat({
-					"fd",
+					"fdfind",
 					"--color=never",
 					"--hidden",
 					"--follow",
