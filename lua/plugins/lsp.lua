@@ -15,8 +15,6 @@ return {
 		require("mason-lspconfig").setup({
 			ensure_installed = {
 				"lua_ls",
-				-- "bashls",
-				"gopls",
 			},
 			automatic_installation = false,
 		})
@@ -27,54 +25,34 @@ return {
 
 		local servers = {
 
-			gopls = {
-				cmd = { "gopls" },
-				filetypes = { "go", "gomod", "gowork", "gotmpl", "gosum" },
-				root_markers = { "go.mod", "go.work", ".git" },
-				settings = {
-					gopls = {
-						completeUnimported = true,
-						usePlaceholders = true,
-						analyses = {
-							unusedparams = true,
-						},
-					},
-				},
-			},
-
 			clangd = {
 				cmd = {
 					"clangd-20",
+					"--pretty",
+					"--log=error",
 					"--clang-tidy",
+					"--enable-config",
 					"--background-index",
-					"--header-insertion=iwyu",
+					"--cross-file-rename",
 					"--all-scopes-completion",
+					"--header-insertion=never",
 					"--completion-style=bundled",
 					"--suggest-missing-includes",
-					"--query-driver=/usr/bin/clang",
-					"--compile-commands-dir=" .. vim.fn.getcwd(),
+					"--header-insertion-decorators",
 				},
 				filetypes = {
 					"c",
 					"h",
-					-- "hpp",
-					-- "cpp",
-					-- "objc",
-					-- "objcpp",
-					-- "cuda",
+					"hpp",
+					"cpp",
+					"objc",
+					"objcpp",
+					"cuda",
 				},
 				init_options = {
 					usePlaceholders = true,
 					clangdFileStatus = true,
 					completeUnimported = true,
-					fallbackFlags = {
-						"-Wall",
-						"-Wextra",
-						"-Werror",
-						"-I/usr/include",
-						"-I/usr/include/x86_64-linux-gnu",
-						"-D_GNU_SOURCE",
-					},
 				},
 			},
 
@@ -90,10 +68,6 @@ return {
 						telemetry = { enable = false },
 					},
 				},
-			},
-
-			bashls = {
-				filetypes = { "sh", "bash", "zsh", "shell" },
 			},
 		}
 
