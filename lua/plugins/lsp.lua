@@ -24,7 +24,6 @@ return {
 		capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 		local servers = {
-
 			clangd = {
 				cmd = {
 					"clangd-20",
@@ -53,6 +52,14 @@ return {
 					usePlaceholders = true,
 					clangdFileStatus = true,
 					completeUnimported = true,
+					fallbackFlags = {
+						"-Wall",
+						"-Wextra",
+						"-Werror",
+						"-I/usr/include",
+						"-I/usr/include/x86_64-linux-gnu",
+						"-D_GNU_SOURCE",
+					},
 				},
 			},
 

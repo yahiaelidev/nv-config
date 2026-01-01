@@ -29,7 +29,7 @@ return {
 				return conf
 			end,
 
-			is_always_hidden = function(name,_)
+			is_always_hidden = function(name, _)
 				return name == '..' or name == '.git'
 			end
 		},
