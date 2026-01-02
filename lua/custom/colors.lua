@@ -6,16 +6,16 @@ M.highlights = function(colors)
 		["@type.builtin.c"] = { fg = colors.yellow },
 		["@type.qualifier.c"] = { fg = colors.mauve, style = { "italic" } },
 
-		["@function.c"] = { fg = colors.teal },
-		["@function.call.c"] = { fg = colors.blue },
-		["@function.builtin.c"] = { fg = colors.peach },
+		["@function.c"] = { fg = colors.teal, style = { "italic" }, },
+		["@function.call.c"] = { fg = colors.blue, style = { "italic" } },
+		["@function.builtin.c"] = { fg = colors.peach, style = { "italic" } },
 		["@variable.parameter.c"] = { fg = colors.red },
 
 		["@lsp.typemod.function.defaultLibrary.c"] = { fg = colors.blue },
-		["@lsp.type.property.c"] = { fg = colors.teal },
+		-- ["@lsp.type.property.c"] = { fg = colors.teal },
 
 		["@keyword.import.c"] = { fg = colors.mauve },
-		["@constant.macro.c"] = { fg = colors.red, style = { "bold" } },
+		["@constant.macro.c"] = { fg = colors.red, },
 
 		["@field.c"] = { fg = colors.teal },
 		["@property.c"] = { fg = colors.teal },

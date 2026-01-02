@@ -4,7 +4,7 @@ end)
 
 vim.env.TERM = "xterm-256color"
 vim.o.cmdheight = 1
-vim.opt.laststatus = 3
+vim.opt.laststatus = 2
 vim.opt.winborder = "none"
 vim.opt.termguicolors = true
 vim.opt.breakindent = true

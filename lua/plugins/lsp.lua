@@ -57,11 +57,11 @@ return {
 				filetypes = {
 					"c",
 					"h",
-					-- "hpp",
-					-- "cpp",
-					-- "objc",
-					-- "objcpp",
-					-- "cuda",
+					"hpp",
+					"cpp",
+					"objc",
+					"objcpp",
+					"cuda",
 				},
 				init_options = {
 					usePlaceholders = true,
