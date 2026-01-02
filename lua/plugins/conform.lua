@@ -3,7 +3,7 @@ return {
 	config = function()
 		local formatters_by_ft = {}
 		local conform = require("conform")
-		local c42 = { 'c', 'h', 'h', 'c', }
+		local c42 = { 'c', 'hpp', 'cpp', 'h', }
 
 		for _, ft in ipairs(c42) do
 			formatters_by_ft[ft] = { "c_formatter_42" }
