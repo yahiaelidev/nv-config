@@ -23,7 +23,7 @@ M.highlights = function(colors)
 		["@label.c"] = { fg = colors.peach },
 		["@string.c"] = { fg = colors.green },
 		["@character.c"] = { fg = colors.green },
-		["@keyword.return.c"] = { fg = colors.mauve },
+		["@keyword.return.c"] = { fg = colors.mauve, style = { "italic" } },
 		["@lsp.type.macro.c"] = { fg = colors.peach },
 		["@keyword.conditional.c"] = { fg = colors.mauve, style = { "italic" } },
 

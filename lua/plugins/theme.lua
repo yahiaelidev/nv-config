@@ -32,7 +32,7 @@ return {
 	},
 	{
 		"itchyny/lightline.vim",
-		enabled = true,
+		enabled = false,
 		config = function()
 			vim.g.lightline = {
 				["colorscheme"] = "catppuccin",
