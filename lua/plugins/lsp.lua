@@ -24,7 +24,6 @@ return {
 		local allcapabilities = vim.lsp.protocol.make_client_capabilities()
 		local capabilities = require("blink.cmp").get_lsp_capabilities(allcapabilities)
 		capabilities.textDocument.completion.completionItem.snippetSupport = true
-		capabilities.textDocument.documentHighlight.dynamicRegistration = true
 
 		local servers = {
 			gopls = {
@@ -106,30 +105,31 @@ return {
 			)
 			vim.lsp.enable(srv)
 		end
-		vim.lsp.set_log_level("debug")
+		vim.lsp.set_log_level("warn")
 
-		local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = true })
-		vim.api.nvim_create_autocmd('LspAttach', {
-			callback = function(args)
-				local client = vim.lsp.get_client_by_id(args.data.client_id)
-				local bufnr = args.buf
-
-				---@diagnostic disable-next-line: missing-parameter
-				if client and client.supports_method('textDocument/documentHighlight') then
-					vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-						buffer = bufnr,
-						group = highlight_augroup,
-						callback = vim.lsp.buf.document_highlight,
-					})
-
-					vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-						buffer = bufnr,
-						group = highlight_augroup,
-						callback = vim.lsp.buf.clear_references,
-					})
-				end
-			end,
-		})
+		-- [[ TODO: so slow, not worth wasting time on it now ]]
+		-- local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = true })
+		-- vim.api.nvim_create_autocmd('LspAttach', {
+		-- 	callback = function(args)
+		-- 		local client = vim.lsp.get_client_by_id(args.data.client_id)
+		-- 		local bufnr = args.buf
+		--
+		-- 		---@diagnostic disable-next-line: missing-parameter
+		-- 		if client and client.supports_method('textDocument/documentHighlight') then
+		-- 			vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+		-- 				buffer = bufnr,
+		-- 				group = highlight_augroup,
+		-- 				callback = vim.lsp.buf.document_highlight,
+		-- 			})
+		--
+		-- 			vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+		-- 				buffer = bufnr,
+		-- 				group = highlight_augroup,
+		-- 				callback = vim.lsp.buf.clear_references,
+		-- 			})
+		-- 		end
+		-- 	end,
+		-- })
 
 
 		vim.diagnostic.config({
