@@ -24,9 +24,9 @@ return {
 		local allcapabilities = vim.lsp.protocol.make_client_capabilities()
 		local capabilities = require("blink.cmp").get_lsp_capabilities(allcapabilities)
 		capabilities.textDocument.completion.completionItem.snippetSupport = true
+		capabilities.textDocument.documentHighlight.dynamicRegistration = true
 
 		local servers = {
-
 			gopls = {
 				cmd = { "gopls" },
 				filetypes = { "go", "gomod", "gowork", "gotmpl", "gosum" },
@@ -47,7 +47,7 @@ return {
 					"clangd-20",
 					"--clang-tidy",
 					"--background-index",
-					"--header-insertion=iwyu",
+					"--header-insertion=never",
 					"--all-scopes-completion",
 					"--completion-style=bundled",
 					"--suggest-missing-includes",
@@ -106,10 +106,35 @@ return {
 			)
 			vim.lsp.enable(srv)
 		end
+		vim.lsp.set_log_level("debug")
+
+		local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = true })
+		vim.api.nvim_create_autocmd('LspAttach', {
+			callback = function(args)
+				local client = vim.lsp.get_client_by_id(args.data.client_id)
+				local bufnr = args.buf
+
+				---@diagnostic disable-next-line: missing-parameter
+				if client and client.supports_method('textDocument/documentHighlight') then
+					vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+						buffer = bufnr,
+						group = highlight_augroup,
+						callback = vim.lsp.buf.document_highlight,
+					})
+
+					vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+						buffer = bufnr,
+						group = highlight_augroup,
+						callback = vim.lsp.buf.clear_references,
+					})
+				end
+			end,
+		})
+
 
 		vim.diagnostic.config({
 			virtual_text = true,
-			underline = false,
+			underline = true,
 			severity_sort = true,
 			update_in_insert = false,
 			float = {
@@ -120,20 +145,16 @@ return {
 			},
 			signs = {
 				text = {
-					[vim.diagnostic.severity.ERROR] = "✘",
-					[vim.diagnostic.severity.WARN] = "▲",
-					[vim.diagnostic.severity.HINT] = "⚑",
-					[vim.diagnostic.severity.INFO] = "»",
+					[vim.diagnostic.severity.ERROR] = "X",
+					[vim.diagnostic.severity.WARN] = "!",
+					[vim.diagnostic.severity.HINT] = "?",
+					[vim.diagnostic.severity.INFO] = ">",
 				},
 				numhl = {
 					[vim.diagnostic.severity.ERROR] = "ErrorMsg",
 					[vim.diagnostic.severity.WARN] = "WarningMsg",
 				},
 			},
-		})
-
-		vim.keymap.set("n", "<leader>a", vim.diagnostic.open_float, {
-			desc = "Show diagnostic details",
 		})
 	end,
 }

@@ -30,6 +30,15 @@ autocmd("BufWritePost", {
 	desc = "Automatically reload lua config files on save",
 })
 
+autocmd({ "BufRead", "BufNewFile" }, {
+	pattern = { "*.txt", "*.md" },
+	callback = function()
+		vim.opt.spell = true
+		vim.opt.spelllang = "en"
+	end,
+	desc = "Enable Spell Checking",
+})
+
 autocmd("TermOpen", {
 	group = Autogroup("Terminal"),
 	callback = function()
