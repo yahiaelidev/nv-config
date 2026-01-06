@@ -57,11 +57,26 @@ map("n", "<leader>tf", ":FzfLua colorschemes<CR>", { desc = "Dark Mode catppucci
 map("n", "<leader>td", ":colo catppuccin-mocha<CR>", { desc = "Dark Mode catppuccin-mocha" })
 map("n", "<leader>tl", ":colo catppuccin-latte<CR>", { desc = "Light Mode catppuccin-mocha" })
 
-map("n", "<leader>w", function()
-	vim.cmd.write()
-end, { desc = ":w command" })
+-- stylua : ingore start
+map("n", "<leader>w", function() vim.cmd.write() end, { desc = ":w command" })
+
+local function quit_func()
+	for _, win in ipairs(vim.api.nvim_list_wins()) do
+		local buf = vim.api.nvim_win_get_buf(win)
+		if vim.bo[buf].bt == "quickfix" then
+			return win
+		end
+	end
+end
 
 map("n", "<leader>q", function()
+	local win = quit_func()
+
+	if win then
+		vim.api.nvim_win_close(win, true)
+		return
+	end
+
 	local bufnr = vim.api.nvim_get_current_buf()
 	vim.cmd("quit")
 	pcall(vim.api.nvim_buf_delete, bufnr, { force = false })
@@ -81,12 +96,8 @@ local function insert_blank_line(above)
 	end
 end
 
-vim.keymap.set("n", "<leader>9", function()
-	insert_blank_line(true)
-end, { desc = "Add empty line above" })
-vim.keymap.set("n", "<leader>0", function()
-	insert_blank_line(false)
-end, { desc = "Add empty line below" })
+vim.keymap.set("n", "<leader>9", function() insert_blank_line(true) end, { desc = "Add empty line above" })
+vim.keymap.set("n", "<leader>0", function() insert_blank_line(false) end, { desc = "Add empty line below" })
 
 map("n", "<up>", '<cmd>echo "in your dreams"<CR>')
 map("n", "<left>", '<cmd>echo "in your dreams"<CR>')

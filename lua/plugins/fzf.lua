@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 return {
 	"ibhagwan/fzf-lua",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -61,7 +62,7 @@ return {
 					layout = "horizontal",
 					horizontal = "bottom:50%",
 					border = "border",
-					wrap = "nowrap",
+					wrap = false,
 				},
 			},
 		})
@@ -78,6 +79,9 @@ return {
 			["<leader>ch"] = function() fzf.command_history() end,
 			["<leader>sh"] = function() fzf.helptags() end,
 			["<leader>sm"] = function() fzf.manpages() end,
+
+			["<leader>sd"] = function() fzf.diagnostics_document() end,
+			["<leader>sw"] = function() fzf.diagnostics_workspace() end,
 
 			["<leader>sg"] = function() fzf.grep_cword() end,
 			["<leader>gb"] = function() fzf.grep_curbuf() end,
