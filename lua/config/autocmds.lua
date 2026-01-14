@@ -23,6 +23,21 @@ autocmd("TextYankPost", {
 	end,
 })
 
+vim.api.nvim_create_autocmd({ "BufWinEnter", "BufWinLeave" }, {
+	group = Autogroup("RememberFolds", { clear = true }),
+	pattern = "*",
+	callback = function(ev)
+		if vim.bo.buftype ~= "" then
+			return
+		end
+		if ev.event == "BufWinEnter" then
+			vim.cmd("silent! loadview")
+		else
+			vim.cmd("silent! mkview")
+		end
+	end,
+})
+
 autocmd("BufWritePost", {
 	command = "source %",
 	group = Autogroup("ConfigReload"),

@@ -21,8 +21,8 @@ return {
 
 			format_on_save = function(bufnr)
 				local disable_filetypes = {
-					c = false,
-					h = false,
+					c = true,
+					h = true,
 					hpp = false,
 					cpp = false,
 					cuda = true,

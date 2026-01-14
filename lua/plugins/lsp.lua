@@ -24,6 +24,7 @@ return {
 		local allcapabilities = vim.lsp.protocol.make_client_capabilities()
 		local capabilities = require("blink.cmp").get_lsp_capabilities(allcapabilities)
 		capabilities.textDocument.completion.completionItem.snippetSupport = true
+		capabilities.workspace.semanticTokens = nil
 
 		local servers = {
 
@@ -59,9 +60,9 @@ return {
 					"h",
 					"hpp",
 					"cpp",
-					"objc",
-					"objcpp",
-					"cuda",
+					-- "objc",
+					-- "objcpp",
+					-- "cuda",
 				},
 				init_options = {
 					usePlaceholders = true,

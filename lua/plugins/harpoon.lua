@@ -13,10 +13,11 @@ return {
 		vim.keymap.set("n", "<A-a>", function() harpoon:list():add() end)
 		vim.keymap.set("n", "<A-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 
-		-- TODO : Later Alt + something
-		-- vim.keymap.set("n", "<leader>h", function() harpoon:list():select(1) end)
-		-- vim.keymap.set("n", "<leader>j", function() harpoon:list():select(2) end)
-		-- vim.keymap.set("n", "<leader>k", function() harpoon:list():select(3) end)
+		-- TODO : Think about a better way
+		vim.keymap.set("n", "<leader>k", function() harpoon:list():select(1) end)
+		vim.keymap.set("n", "<leader>j", function() harpoon:list():select(2) end)
+		vim.keymap.set("n", "<leader>h", function() harpoon:list():select(3) end)
+		vim.keymap.set("n", "<leader>l", function() harpoon:list():select(4) end)
 
 		harpoon_ui._render = function(self, state)
 			for _, item in ipairs(state.list) do
@@ -24,6 +25,7 @@ return {
 			end
 			return orig_render(self, state)
 		end
+
 		local function quickfix_exists()
 			for _, win in ipairs(vim.api.nvim_list_wins()) do
 				local buf = vim.api.nvim_win_get_buf(win)
@@ -39,16 +41,25 @@ return {
 				vim.cmd("cnext")
 				vim.cmd("normal! zz")
 			else
-				harpoon:list():prev()
+				local list = harpoon:list():prev()
+				if list and #list.items > 0 then
+					list:prev()
+				else
+					return
+				end
 			end
 		end, { desc = "Quickfix next / Harpoon next" })
-
 		vim.keymap.set("n", "<A-k>", function()
 			if quickfix_exists() then
 				vim.cmd("cprev")
 				vim.cmd("normal! zz")
 			else
-				harpoon:list():next()
+				local list = harpoon:list():next()
+				if list and #list.items > 0 then
+					list:next()
+				else
+					return
+				end
 			end
 		end, { desc = "Quickfix prev / Harpoon prev" })
 	end

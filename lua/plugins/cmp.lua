@@ -18,20 +18,20 @@ return {
 			snippets = { preset = "luasnip" },
 			appearance = { nerd_font_variant = "mono" },
 
-			keymap = {
-				preset = "default",
-				["<Tab>"] = { "select_and_accept", "snippet_forward", "fallback" },
-			},
-
-			cmdline = {
-				keymap = {
-					["<Up>"] = { "select_prev", "fallback" },
-					["<Down>"] = { "select_next", "fallback" },
-
-					["<C-p>"] = { "select_prev", "fallback" },
-					["<C-n>"] = { "select_next", "fallback" },
-				},
-			},
+			-- keymap = {
+			-- 	preset = "default",
+			-- 	["<Tab>"] = { "select_and_accept", "snippet_forward", "fallback" },
+			-- },
+			--
+			-- cmdline = {
+			-- 	keymap = {
+			-- 		["<Up>"] = { "select_prev", "fallback" },
+			-- 		["<Down>"] = { "select_next", "fallback" },
+			--
+			-- 		["<C-p>"] = { "select_prev", "fallback" },
+			-- 		["<C-n>"] = { "select_next", "fallback" },
+			-- 	},
+			-- },
 
 			completion = {
 				trigger = {
@@ -62,7 +62,7 @@ return {
 					draw = {
 
 						columns = {
-							{ "kind_icon", gap = 1 },
+							{ "kind_icon",  gap = 1 },
 							{
 								"label",
 								"label_description",

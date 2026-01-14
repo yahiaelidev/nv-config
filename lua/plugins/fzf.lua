@@ -85,6 +85,7 @@ return {
 
 			["<leader>sg"] = function() fzf.grep_cword() end,
 			["<leader>gb"] = function() fzf.grep_curbuf() end,
+			["<leader>sp"] = function() fzf.grep_project() end,
 
 			["grr"] = function() return fzf.lsp_references() end,
 			["gri"] = function() fzf.lsp_implementations() end,
