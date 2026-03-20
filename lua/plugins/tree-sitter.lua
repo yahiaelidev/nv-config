@@ -1,15 +1,16 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
-
+	branch = "master",
 	build = ":TSUpdate",
-	event = { "BufReadPre", "BufNewFile" },
 	main = "nvim-treesitter.configs",
 
 	-- stylua: ignore start
 	opts = {
-		ensure_installed = { "bash", "c", "diff", "html",
+		ensure_installed = {
+			"javascript", "typescript", "tsx", "html", "astro",
+			"cpp", "c", "bash", "diff", "html", "astro", "svelte",
 			"lua", "luadoc", "markdown", "markdown_inline",
-			"query", "vim", "vimdoc", },
+			"query", "vim", "vimdoc", "jsonc", "json" },
 
 		sync_install = false,
 		auto_install = true,

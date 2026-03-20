@@ -29,8 +29,8 @@ return {
 				return conf
 			end,
 
-			is_always_hidden = function(name,_)
-				return name == '..' or name == '.git'
+			is_always_hidden = function(fs, _)
+				return fs == '..' or fs == '.git'
 			end
 		},
 		vim.keymap.set('n', '-', '<CMD>Oil --float<CR>'),

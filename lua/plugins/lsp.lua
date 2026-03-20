@@ -14,9 +14,10 @@ return {
 		require("fidget").setup({})
 		require("mason-lspconfig").setup({
 			ensure_installed = {
-				"lua_ls",
-				-- "bashls",
-				"gopls",
+				"gopls", "lua_ls", "bashls",
+				"html", "astro", "cssls", "tailwindcss",
+				"ts_ls", "eslint",
+				-- "emmet_ls",
 			},
 			automatic_installation = false,
 		})
@@ -27,6 +28,15 @@ return {
 		capabilities.workspace.semanticTokens = nil
 
 		local servers = {
+
+			astro = {},
+			cssls = {},
+			html = { filetypes = { "html" } },
+			-- emmet_ls = {
+			-- 	filetypes = {
+			-- 		"html", "css", "sass", "scss",
+			-- 	},
+			-- },
 
 			gopls = {
 				cmd = { "gopls" },
@@ -48,7 +58,7 @@ return {
 					"clangd-20",
 					"--clang-tidy",
 					"--background-index",
-					"--header-insertion=iwyu",
+					"--header-insertion=never",
 					"--all-scopes-completion",
 					"--completion-style=bundled",
 					"--suggest-missing-includes",
@@ -60,22 +70,22 @@ return {
 					"h",
 					"hpp",
 					"cpp",
-					-- "objc",
-					-- "objcpp",
-					-- "cuda",
+					"objc",
+					"objcpp",
+					"cuda",
 				},
 				init_options = {
 					usePlaceholders = true,
 					clangdFileStatus = true,
 					completeUnimported = true,
-					fallbackFlags = {
-						"-Wall",
-						"-Wextra",
-						"-Werror",
-						"-I/usr/include",
-						"-I/usr/include/x86_64-linux-gnu",
-						"-D_GNU_SOURCE",
-					},
+					-- fallbackFlags = {
+					-- 	"-Wall",
+					-- 	"-Wextra",
+					-- 	"-Werror",
+					-- 	"-I/usr/include",
+					-- 	"-I/usr/include/x86_64-linux-gnu",
+					-- 	"-D_GNU_SOURCE",
+					-- },
 				},
 			},
 
@@ -108,6 +118,7 @@ return {
 			vim.lsp.enable(srv)
 		end
 
+		vim.lsp.set_log_level("warn")
 		vim.diagnostic.config({
 			virtual_text = true,
 			underline = false,

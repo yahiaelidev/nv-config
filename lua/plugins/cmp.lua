@@ -55,20 +55,20 @@ return {
 				menu = {
 					border = nil,
 					scrolloff = 1,
-					min_width = 10,
-					max_height = 15,
+					min_width = 5,
+					max_height = 5,
 					auto_show = true,
 					scrollbar = false,
 					draw = {
 
 						columns = {
-							{ "kind_icon",  gap = 1 },
+							{ "kind_icon",  gap = 2 },
 							{
 								"label",
 								"label_description",
-								gap = 1,
+								gap = 2,
 							},
-							{ "kind" },
+							-- { "kind" },
 							{ "source_name" },
 						},
 					},
@@ -80,13 +80,14 @@ return {
 						scrollbar = false,
 						winhighlight = "Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,EndOfBuffer:BlinkCmpDoc",
 					},
-					auto_show = false,
-					auto_show_delay_ms = 500,
+					auto_show = true,
+					auto_show_delay_ms = 1000,
 				},
 			},
 			fuzzy = { implementation = "prefer_rust_with_warning" },
 			sources = {
-				default = { "lsp", "buffer", "snippets", "path" },
+
+				default = { "lsp", "snippets", "buffer", "path" },
 			},
 		})
 	end,

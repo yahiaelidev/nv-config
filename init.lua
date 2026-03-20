@@ -7,3 +7,6 @@ require("config.keymaps")
 require("config.autocmds")
 require("config.c-term")
 require("config.lazy")
+
+vim.g.astro_typescript = 'enable'
+vim.g.astro_stylus = 'enable'

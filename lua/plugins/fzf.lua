@@ -90,13 +90,8 @@ return {
 			["grr"] = function() return fzf.lsp_references() end,
 			["gri"] = function() fzf.lsp_implementations() end,
 
-			["grd"] = function()
-				if vim.bo.filetype == "go" then
-					fzf.lsp_definitions()
-				else
-					fzf.lsp_declarations()
-				end
-			end,
+			["grd"] = function() fzf.lsp_definitions() end,
+			["grD"] = function() fzf.lsp_declarations() end,
 		}
 		-- stylua: ignore end
 

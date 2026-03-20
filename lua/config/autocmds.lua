@@ -23,20 +23,29 @@ autocmd("TextYankPost", {
 	end,
 })
 
-vim.api.nvim_create_autocmd({ "BufWinEnter", "BufWinLeave" }, {
-	group = Autogroup("RememberFolds", { clear = true }),
-	pattern = "*",
-	callback = function(ev)
-		if vim.bo.buftype ~= "" then
-			return
-		end
-		if ev.event == "BufWinEnter" then
-			vim.cmd("silent! loadview")
-		else
-			vim.cmd("silent! mkview")
-		end
+autocmd("FileType", {
+	group = Autogroup("NoAutoCommnet"),
+	callback = function()
+		vim.opt_local.formatoptions:remove({ "c", "o", "C", "O", "<CR>" })
 	end,
 })
+
+-- vim.api.nvim_create_autocmd({ "BufWinEnter", "BufWinLeave" }, {
+-- 	group = Autogroup("RememberFolds", { clear = true }),
+-- 	pattern = "?*",
+-- 	callback = function(ev)
+-- 		if vim.bo.buftype ~= "" then
+-- 			return
+-- 		end
+-- 		if ev.event == "BufWinEnter" then
+-- 			vim.schedule(function()
+-- 				vim.cmd("silent! loadview")
+-- 			end)
+-- 		else
+-- 			vim.cmd("silent! mkview")
+-- 		end
+-- 	end,
+-- })
 
 autocmd("BufWritePost", {
 	command = "source %",

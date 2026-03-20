@@ -11,8 +11,9 @@ map({ "n", "v" }, "<leader>d", '"_d', { desc = "Delete + No save to register" })
 map("i", "bb", "[]<ESC>i")
 map("i", "BB", "{}<ESC>i")
 map("i", "jj", '""<ESC>i', { noremap = true })
-map("i", "kk", "''<ESC>i", { noremap = true })
-map("i", "jf", "<ESC>", { noremap = false })
+map("i", "JJ", "''<ESC>i", { noremap = true })
+map("i", "kj", "<ESC>", { noremap = false })
+map("i", "kj", "<ESC>", { noremap = false })
 
 map("n", "<A-j>", "<cmd>cnext<CR>zz", { desc = "<Down> QuickFix" })
 map("n", "<A-k>", "<cmd>cprev<CR>zz", { desc = "<Up> Quickfix" })
@@ -106,5 +107,9 @@ map("n", "<right>", '<cmd>echo "in your dreams"<CR>')
 map("n", "<ESC>", "<cmd>nohlsearch<CR>", { silent = true })
 
 map("n", "<leader><leader>x", "<cmd>source %<CR>", {
+	desc = "Execute the current file",
+})
+
+map("n", "<leader>x", ':execute getline(".")<CR>', {
 	desc = "Execute the current file",
 })

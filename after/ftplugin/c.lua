@@ -6,6 +6,8 @@ vim.opt_local.cindent = true
 vim.opt_local.smartindent = true
 
 vim.keymap.set("i", "__", "->", { buffer = 0 })
+-- vim.keymap.set("i", "main", "int main() {<CR>}<ESC>O", { noremap = false })
+-- vim.keymap.set("i", "av", "int main(int argc, char **argv) {<CR>}<ESC>O", { noremap = false })
 
 -- TODO: Coloring the output with nvim API
 local cmaps = {
