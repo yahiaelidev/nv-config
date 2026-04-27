@@ -15,8 +15,8 @@ map("i", "JJ", "''<ESC>i", { noremap = true })
 map("i", "kj", "<ESC>", { noremap = false })
 map("i", "kj", "<ESC>", { noremap = false })
 
-map("n", "<A-j>", "<cmd>cnext<CR>zz", { desc = "<Down> QuickFix" })
-map("n", "<A-k>", "<cmd>cprev<CR>zz", { desc = "<Up> Quickfix" })
+-- map("n", "<A-j>", "<cmd>cnext<CR>zz", { desc = "<Down> QuickFix" })
+-- map("n", "<A-k>", "<cmd>cprev<CR>zz", { desc = "<Up> Quickfix" })
 
 map("v", "J", ":m '>+1<CR>gv")
 map("v", "K", ":m '<-2<CR>gv")
@@ -25,18 +25,22 @@ map("n", "<C-h>", "<C-w><C-h>")
 map("n", "<C-k>", "<C-w><C-k>")
 map("n", "<C-l>", "<C-w><C-l>")
 map("n", "<C-j>", "<C-w><C-j>")
+map("t", "<C-h>", "<C-\\><C-N><C-w>h")
+map("t", "<C-k>", "<C-\\><C-N><C-w>k")
 
 map("n", "<CS-l>", "<C-w>6<", { desc = "Shorten window" })
 map("n", "<CS-h>", "<C-w>6>", { desc = "Lengthen window" })
 
+map("i", "<C-;>", "<C-o>a", { desc = "move right" })
+map("v", "<leader>c", "dOif (0) {<CR>}<ESC>Pvi{>^", { desc = "Warp with if (0)" })
 map("n", "gl", "$")
 map("n", "<leader>e", "%")
 map("n", "<leader>ye", "y$")
 map("x", "<leader>p", [["_dP]])
 map("n", "<leader>o", "2o<ESC>O")
 map("n", "<leader>O", "2O<ESC>O")
-map("n", "<leader><leader>y", "Vy^p")
-map("n", "<leader><leader>Y", "Vy^P")
+map("i", "<C-y>", "<ESC>Vy^p")
+map("i", "<C-p>", "<ESC>Vy^P")
 map("n", "<leader><leader>f", "^Vj%o")
 map("n", "<leader><leader>a", "A;<ESC>")
 map("n", "<leader><leader>i", "i<C-CR><ESC>O")
@@ -61,27 +65,35 @@ map("n", "<leader>tl", ":colo catppuccin-latte<CR>", { desc = "Light Mode catppu
 -- stylua : ingore start
 map("n", "<leader>w", function() vim.cmd.write() end, { desc = ":w command" })
 
-local function quit_func()
-	for _, win in ipairs(vim.api.nvim_list_wins()) do
+map("n", "<leader>q", function()
+	local curr_win, curr_buff = vim.api.nvim_get_current_win(), vim.api.nvim_get_current_buf()
+
+	if vim.bo[curr_buff].bt == "quickfix" then
+		return vim.api.nvim_win_close(curr_win, true)
+	end
+
+	local duplicates, quickfix, windows = {}, nil, vim.api.nvim_list_wins()
+	for _, win in ipairs(windows) do
 		local buf = vim.api.nvim_win_get_buf(win)
+		if buf == curr_buff then
+			table.insert(duplicates, win)
+		end
+
 		if vim.bo[buf].bt == "quickfix" then
-			return win
+			quickfix = win
 		end
 	end
-end
 
-map("n", "<leader>q", function()
-	local win = quit_func()
-
-	if win then
-		vim.api.nvim_win_close(win, true)
-		return
+	if #duplicates > 1 then
+		return vim.api.nvim_win_close(duplicates[2], false)
+	end
+	if quickfix ~= nil then
+		return vim.api.nvim_win_close(quickfix, false)
 	end
 
-	local bufnr = vim.api.nvim_get_current_buf()
 	vim.cmd("quit")
-	pcall(vim.api.nvim_buf_delete, bufnr, { force = false })
-end, { desc = "Quit & delete the buffer" })
+	pcall(vim.api.nvim_buf_delete, curr_buff, { force = false })
+end, { desc = "Quit duplicate wins or Quit+Delete the curr buffer" })
 
 local function insert_blank_line(above)
 	local row, col = unpack(vim.api.nvim_win_get_cursor(0))
