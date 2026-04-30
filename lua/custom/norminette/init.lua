@@ -50,8 +50,10 @@ local ui_update = function(qf_items)
 			print("Norminette: OK!")
 		end
 	else
-		vim.fn.setqflist(qf_items, "r")
-		vim.fn.setqflist({}, "a", { title = "Norminette" })
+		vim.fn.setqflist({}, " ", {
+			title = "Norminette",
+			items = qf_items,
+		})
 
 		vim.cmd("botright silent! cwindow")
 		vim.api.nvim_set_current_win(curr_win)
@@ -88,11 +90,9 @@ M.setup = function(opts)
 			local wins = vim.api.nvim_list_wins()
 
 			for _, win in ipairs(wins) do
-				local buftype = vim.api.nvim_get_option_value("buftype", {
-					buf = vim.api.nvim_win_get_buf(win)
-				})
+				local buf = vim.api.nvim_win_get_buf(win)
 
-				if buftype == "quickfix" then
+				if vim.bo[buf].buftype == "quickfix" then
 					local qf = vim.fn.getqflist({
 						winid = win,
 						title = 0
